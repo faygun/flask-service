@@ -1,0 +1,27 @@
+python init sqllite
+
+1- from server import server,db
+2- db
+3- from model.models import AccessToken
+4- AccessToken
+5- server.app_context().push()
+6- db.create_all()
+
+python project to be hosted on IIS
+
+1- pip install wfastcgi
+2- wfastcgi-enable
+3- Create website on IIS
+4- Select Handler Mappings
+5- Add module mappings
+6- Enter * value as request path - Select FastCgiModule as module - Enter python.exe path | wfastcgi.py path - Name the module - Disable the request restriction
+7- Select Authentication - Disable ASP.NET Impersonation
+8- Go to project folder add nodes below to Web.config file after </system.webserver>
+
+<appSettings>
+    <add key="WSGI_HANDLER" value="server.server" /> <!-- {name_of_file}.{name_of_flask_app}-->
+    <add key="PYTHONPATH" value="C:\inetpub\wwwroot\service" />
+</appSettings>
+
+9- Go to python folder where python.exe is in - give the Application Pool where project runs on a permission
+10- Go to project folder and give Application Pool a permission.
