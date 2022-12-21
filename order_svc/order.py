@@ -18,6 +18,8 @@ def getOrders(db:SQLAlchemy, filter):
             query += f"created_before={filter['orderEnd']}T00:00:00Z&"
         if "brand" in filter and filter["brand"]:
             query += f"merchant_id={filter['brand']}&"
+        if "country" in filter and filter["country"]:
+            query += f"locale={filter['country']}&"
         if "pageNumber" in filter:
             query += f"page[number]={filter['pageNumber']}&"
         if "pageSize" in filter and filter["pageSize"]:
