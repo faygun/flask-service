@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from model import create_app
 from auth import token_util
 from order_svc import order
+from product_svc import product
 from utility import config
 from flask_cors import CORS
 
@@ -13,6 +14,9 @@ server, db = create_app()
 CORS(server, origins=["*"], methods=["GET", "POST"], allow_headers="*")
 
 loggingPath = os.path.join(pathlib.Path().resolve(), 'logs', 'error_log.log')
+
+if os.path.exists(loggingPath) == False:
+    f = open(loggingPath, "w")
 
 handler = RotatingFileHandler(loggingPath, maxBytes=102400, backupCount=10)
 logging_format = logging.Formatter(
@@ -76,6 +80,16 @@ def getOrders():
     
     
     return response, 200
+
+
+@server.route("/api/v1/products/upload", methods=["POST"])
+def uploadProductFile():
+    try:
+        response = product.uploadProductFile(request)
+        return jsonify(result = response), 200
+    
+    except Exception as err:
+        return jsonify(error = err), 500
 
 if __name__ == "__main__":
     server.run(host="0.0.0.0", port=5000)

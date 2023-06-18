@@ -1,0 +1,4 @@
+- python -m venv venv
+- source venv\\Scripts\\activate
+- pip freeze > requirements.txt (use it if you want to move installed packages into the requirements.txt file...)
+- pip install -r requirements.txt
